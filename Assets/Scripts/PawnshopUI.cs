@@ -80,7 +80,7 @@ public class PawnshopUI : MonoBehaviour
 
     private void UpdateBalanceUI(int newBalance)
     {
-        balanceText.text = newBalance.ToString() + " $";
+        balanceText.text = newBalance.ToString() + "$";
     }
 
     private void HandleItemOnDesk(PawnshopItem newItem)

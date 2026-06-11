@@ -1,15 +1,25 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private Button continueButton;
 
     public void StartNewGame()
     {
         Debug.Log("Запускаємо гру...");
+        GlobalState.ResetGame();
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void ContinueGame()
+    {
+        Debug.Log("Продовжуємо гру...");
+        GlobalState.LoadGame();
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -34,5 +44,12 @@ public class MainMenuManager : MonoBehaviour
     public void ClosePanel(GameObject panelToClose)
     {
         panelToClose.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if (!GlobalState.HasSave())
+            continueButton.interactable = false;
+            
     }
 }

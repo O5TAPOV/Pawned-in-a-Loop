@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private GameObject closingTextObject;
 
+    [SerializeField] private TextMeshProUGUI dayText;
+
     private void OnEnable()
     {
         EventManager.OnItemBought += HandleItemBought;
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
         }
 
         winPanel.SetActive(true);
-        GlobalState.CurrentDay++;
+        GlobalState.SaveGame();
     }
 
     public void StartNextDay()
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviour
         isDayActive = true;
         isClosingPhase = false;
         boughtItemsToday.Clear();
-
+        dayText.text = $"DAY {GlobalState.CurrentDay}";
         EventManager.NewDayStarted();
     }
 
@@ -102,12 +104,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Виходимо з гри...");
-            Application.Quit(); // Працює ТІЛЬКИ в зібраному білді, в Unity Editor нічого не зробить
-        }
-
         if (!isDayActive) return;
 
         currentTime = Mathf.Max(0, currentTime - Time.deltaTime);
